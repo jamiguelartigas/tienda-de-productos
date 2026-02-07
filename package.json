@@ -1,0 +1,28 @@
+{
+  "name": "projectbreak2_s15_16",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmiguel78/ProjectBreak2_S15_16.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmiguel78/ProjectBreak2_S15_16/issues"
+  },
+  "homepage": "https://github.com/tmiguel78/ProjectBreak2_S15_16#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.1.6"
+  }
+}
