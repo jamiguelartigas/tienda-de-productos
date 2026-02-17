@@ -1,48 +1,149 @@
 const { Product } = require('../models/Product');
+const getProductCards = require('../helpers/getProductCards');
+const getProductCard = require('../helpers/getProductCard');
+const getForm = require('../helpers/getForm');
+const getFormEdit = require('../helpers/getFormEdit');
+const getNavBar = require('../helpers/getNavBar');
+const baseHtml = require('../helpers/baseHtml');
+const uploadToCloudinary = require("../helpers/uploadToCloudinary");
 
-const categories = Product.schema.path('Categoría').enumValues;
-const sizes = Product.schema.path('Talla').enumValues;
 
-const optionCategories = categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
-const optionSizes = sizes.map(e => `<option value="${e}">${e}</option>`).join('');
+const ProductController = {
+    showProducts : async (req,res) => {
+        try {
+            const isDashboard = req.originalUrl.startsWith("/dashboard");
+            const products = await Product.find();
+            const productCards = getProductCards(products, { isDashboard });
+            const content = getNavBar({ isDashboard }) + productCards;
+            const html =  baseHtml(content);
+            res.status(200).send(html)
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ mensaje : 'Error obteniendo los productos'})
+        }
+    },
+    showProductById : async(req, res) => {
+        try {
+            const isDashboard = req.originalUrl.startsWith("/dashboard");
+            const product = await Product.findById(req.params.productId);
+            const productCard = getProductCard(product, { isDashboard });
+            const content = getNavBar({ isDashboard }) + productCard;
+            const html = baseHtml(content);
+            
+            if (!product) {
+                return res.status(404).send('Producto no encontrado')
+            };
+            res.status(200).send(html)           
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ mensaje : 'Error obteniendo el producto'})
+        }
+    },
+    showNewProduct : (req, res) => {
+        const html = getForm();
+        res.send(html)
+    },
+    createProduct : async (req, res) => {
+        try {
+            
+            if (!req.file) {
+                return res.status(400).send('Tienes que seleccionar una imagen')
+            }
+            const result = await uploadToCloudinary(req.file.buffer);
+    
+            const newProduct = new Product({
+                ...req.body,
+                imagen: result.secure_url
+            });
+            await newProduct.save();
+    
+            res.send(`
+                <h2>Producto creado con éxito</h2>
+                <a href="/dashboard">Volver al dashboard</a>
+                `)
+            
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ mensaje : 'Error creando el producto nuevo.'})
+        }
+    
+    },
+    showEditProduct: async (req, res) => {
+        const product = await Product.findById(req.params.productId);
+        const html = getFormEdit(product);
 
+        res.send(html)
+    },
 
-exports.showNewProduct = (req, res) => {
-  const html = `
-    <!DOCTYPE html>
-    <html lang="es">
-      <head>
-        <meta charset="UTF-8">
-        <title>Nuevo producto</title>
-      </head>
-      <body>
-        <h1>Nuevo producto</h1>
+    updateProduct: async (req, res) => {
+        try {
+            const product = await Product.findById(req.params.productId)
+            if (!product) {
+                return res.status(404).send("Producto no encontrado")
+            }
+            
+            if (req.body.nombre) product.nombre = req.body.nombre;
+            if (req.body.descripcion) product.descripcion = req.body.descripcion;
+            if (req.body.precio) product.precio = req.body.precio;
+            if (req.body.categoria) product.categoria = req.body.categoria;
+            if (req.body.talla) product.talla = req.body.talla;
 
-        <form action="/dashboard" method="POST" enctype="multipart/form-data">
-          <label for="name">Nombre:</label>
-          <input type="text" id="name" name="name" required>
-          <label for="description">Descripción:</label>
-          <input type="text" id="description" name="description" required>
-          <label for="price">Precio (€):</label>
-          <input type="number" id="price" name="price" min="0" step="0.01" required>
-          <label for="image">Imagen:</label>
-          <input type="file" id="image" name="image" accept="image/*">
-          <label for="category">Categoría:</label>
-          <select id="category" name="category" required>
-            <option value=""> - Selecciona - </option>
-            ${optionCategories}
-          <label for="size">Talla:</label>
-          <select id="size" name="size" required>
-            <option value=""> — Selecciona — </option>
-            ${optionSizes}
-          </select>
+            if (req.file) {
+                const result = await uploadToCloudinary(req.file.buffer);
+                product.imagen = result.secure_url
+            }
 
-          <button type="submit">Guardar</button>
-        </form>
+            await product.save()
+    
+            res.send(`
+                <h2>Producto actualizado con éxito</h2>
+                <a href="/dashboard">Volver al dashboard</a>
+                `)
+            
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ mensaje : 'Error actualizando el producto nuevo.'})
+        }
+    },
 
-        <p><a href="/dashboard">← Volver al dashboard</a></p>
-      </body>
-    </html>
-  `;
-  res.send(html);
+    deleteProduct : async (req,res) => {
+    try {
+        const productId = req.params.productId;
+        if (!productId) {
+            return res.status(404).json({ mensaje : 'Producto no encontrado'})
+        }
+
+        await Product.findByIdAndDelete(productId)
+        res.status(200).redirect('/dashboard')
+        
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ mensaje : 'Error borrando el producto.'})
+        }
+    },
+
+    showProductsByCategory : async (req, res) => {
+        try {
+            const isDashboard = req.originalUrl.startsWith("/dashboard");
+            const products = await Product.find({ categoria : req.params.categoria });
+
+            if (products.length === 0) {
+                const content = getNavBar({ isDashboard }) + `<h2>No hay productos en esta categoría</h2>`
+                return res.status(200).send(baseHtml(content))
+            }
+            const productCards = getProductCards(products, { isDashboard });
+            const content = getNavBar({ isDashboard }) + productCards;
+            const html = baseHtml(content);
+            
+            res.status(200).send(html) 
+
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ mensaje : 'Error obteniendo el producto'})
+        }
+    }
 };
+
+
+
+module.exports = { ProductController };

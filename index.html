@@ -1,12 +1,9 @@
-const { optionCategories, optionSizes } = require('../controllers/productController');
-
-exports.showEditedProduct = (req,res) => {
-    const html= `
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="es">
       <head>
         <meta charset="UTF-8">
         <title>Nuevo producto</title>
+        <link rel="stylesheet" href="./public/styles.css">
         <style>
             body {
                 display: flex;
@@ -42,30 +39,32 @@ exports.showEditedProduct = (req,res) => {
                 font-size: 18px;
     
             }
-            
+            .product-card {
+                border: 2px solid black;
+            }
         </style>
       </head>
       <body>
         <h1>Nuevo producto</h1>
 
-        <form action="/dashboard/:productId?_method=PUT" method="POST" enctype="multipart/form-data">
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="name" name="nombre" value=${producto.nombre} required>
-          <label for="descripcion">Descripción:</label>
-          <input type="text" id="descripcion" name="descripcion" value=${producto.descripcion} required>
+        <form action="/dashboard" method="POST" enctype="multipart/form-data">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" name="name" required>
+          <label for="description">Descripción:</label>
+          <textarea name="description" id="description" rows="2" cols="25" required></textarea>         
           <label for="price">Precio (€):</label>
-          <input type="number" id="precio" name="precio" min="0" step="0.01" value=${producto.precio} required>
+          <input type="number" id="price" name="price" min="0" step="0.01" required>
           <label for="image">Imagen:</label>
-          <input type="file" id="imagen" name="imagen" accept="image/*">
-          <label for="categoria">Categoría:</label>
-          <select id="categoria" name="categoria" required>
-            <option value="" selected> - Selecciona - </option>
-             ${optionCategories}
+          <input type="file" id="image" name="image" accept="image/*">
+          <label for="category">Categoría:</label>
+          <select id="category" name="category" required>
+            <option value=""> - Selecciona - </option>
+            ${optionCategories}
             </select>
           <label for="size">Talla:</label>
           <select id="size" name="size" required>
-            <option value="" selected> — Selecciona — </option>
-             ${optionSizes}
+            <option value=""> — Selecciona — </option>
+            ${optionSizes}
           </select>
 
           <button type="submit">Guardar</button>
@@ -74,7 +73,3 @@ exports.showEditedProduct = (req,res) => {
         <p><a href="/dashboard">← Volver al dashboard</a></p>
       </body>
     </html>
-`
-res.send(html)
-};
-

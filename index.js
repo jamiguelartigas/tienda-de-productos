@@ -4,9 +4,12 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 const routes = require('./routes/productRoutes');
 const dbConnection = require('./config/db');
+const methodOverride = require('method-override');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(express.static("public"));
 
 app.use('/', routes);
 

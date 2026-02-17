@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/tmiguel78/ProjectBreak2_S15_16#readme",
   "dependencies": {
+    "cloudinary": "^2.9.0",
     "express": "^5.2.1",
-    "mongoose": "^9.1.6"
+    "method-override": "^3.0.0",
+    "mongoose": "^9.1.6",
+    "multer": "^2.0.2",
+    "streamifier": "^0.1.1"
   }
 }
