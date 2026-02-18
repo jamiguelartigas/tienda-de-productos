@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "start": "node --watch index.js"
   },
   "repository": {
@@ -27,6 +28,11 @@
     "method-override": "^3.0.0",
     "mongoose": "^9.1.6",
     "multer": "^2.0.2",
-    "streamifier": "^0.1.1"
+    "streamifier": "^0.1.1",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.2.2"
   }
 }

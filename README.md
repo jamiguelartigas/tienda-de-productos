@@ -24,3 +24,7 @@ GET /dashboard/:productId: Devuelve el detalle de un producto en el dashboard.
 GET /dashboard/:productId/edit: Devuelve el formulario para editar un producto.
 PUT /dashboard/:productId: Actualiza un producto.
 DELETE /dashboard/:productId/delete: Elimina un producto.
+
+- Documentación con Swagger:
+  está en la carpeta /docs
+  Ruta para entrar /api-docs

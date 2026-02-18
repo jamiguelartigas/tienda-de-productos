@@ -20,7 +20,7 @@ function getFormEdit(product) {
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" value="${product.nombre}" required>
                 <label for="descripcion">Descripción:</label>
-                <input type="text" id="descripcion" name="descripcion" value="${product.descripcion}" required>
+                <textarea name="description" id="description" rows="2" cols="25" required>${product.descripcion}</textarea>
                 <label for="precio">Precio (€):</label>
                 <input type="number" id="precio" name="precio" min="0" step="0.01" value="${product.precio}" required>
                 <label for="imagen">Imagen:</label>

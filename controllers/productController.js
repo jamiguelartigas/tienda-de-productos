@@ -1,7 +1,7 @@
 const { Product } = require('../models/Product');
 const getProductCards = require('../helpers/getProductCards');
 const getProductCard = require('../helpers/getProductCard');
-const getForm = require('../helpers/getForm');
+const { getForm } = require('../helpers/getForm');
 const getFormEdit = require('../helpers/getFormEdit');
 const getNavBar = require('../helpers/getNavBar');
 const baseHtml = require('../helpers/baseHtml');
@@ -19,7 +19,7 @@ const ProductController = {
             res.status(200).send(html)
         } catch (error) {
             console.error(error)
-            res.status(500).json({ mensaje : 'Error obteniendo los productos'})
+            res.status(500).send('Error obteniendo los productos')
         }
     },
     showProductById : async(req, res) => {
@@ -36,7 +36,7 @@ const ProductController = {
             res.status(200).send(html)           
         } catch (error) {
             console.error(error)
-            res.status(500).json({ mensaje : 'Error obteniendo el producto'})
+            res.status(500).send('Error obteniendo el producto')
         }
     },
     showNewProduct : (req, res) => {
@@ -51,20 +51,19 @@ const ProductController = {
             }
             const result = await uploadToCloudinary(req.file.buffer);
     
-            const newProduct = new Product({
+            await Product.create({
                 ...req.body,
                 imagen: result.secure_url
             });
-            await newProduct.save();
     
-            res.send(`
+            res.status(201).send(`
                 <h2>Producto creado con éxito</h2>
                 <a href="/dashboard">Volver al dashboard</a>
                 `)
             
         } catch (error) {
             console.error(error)
-            res.status(500).json({ mensaje : 'Error creando el producto nuevo.'})
+            res.status(500).send('Error creando el producto nuevo.')
         }
     
     },
@@ -84,7 +83,7 @@ const ProductController = {
             
             if (req.body.nombre) product.nombre = req.body.nombre;
             if (req.body.descripcion) product.descripcion = req.body.descripcion;
-            if (req.body.precio) product.precio = req.body.precio;
+            if (req.body.precio !== undefined) product.precio = Number(req.body.precio);
             if (req.body.categoria) product.categoria = req.body.categoria;
             if (req.body.talla) product.talla = req.body.talla;
 
@@ -102,23 +101,23 @@ const ProductController = {
             
         } catch (error) {
             console.error(error)
-            res.status(500).json({ mensaje : 'Error actualizando el producto nuevo.'})
+            res.status(500).send('Error actualizando el producto nuevo.')
         }
     },
 
     deleteProduct : async (req,res) => {
     try {
         const productId = req.params.productId;
-        if (!productId) {
-            return res.status(404).json({ mensaje : 'Producto no encontrado'})
+        const deletedProduct = await Product.findByIdAndDelete(productId)
+        if (!deletedProduct) {
+            return res.status(404).send('Producto no encontrado')
         }
 
-        await Product.findByIdAndDelete(productId)
         res.status(200).redirect('/dashboard')
         
         } catch (error) {
             console.error(error)
-            res.status(500).json({ mensaje : 'Error borrando el producto.'})
+            res.status(500).send('Error borrando el producto.')
         }
     },
 
@@ -128,7 +127,7 @@ const ProductController = {
             const products = await Product.find({ categoria : req.params.categoria });
 
             if (products.length === 0) {
-                const content = getNavBar({ isDashboard }) + `<h2>No hay productos en esta categoría</h2>`
+                const content = getNavBar({ isDashboard }) + `<h2>No hay productos en esta categoría: ${req.params.categoria} </h2>`
                 return res.status(200).send(baseHtml(content))
             }
             const productCards = getProductCards(products, { isDashboard });
@@ -139,7 +138,7 @@ const ProductController = {
 
         } catch (error) {
             console.error(error)
-            res.status(500).json({ mensaje : 'Error obteniendo el producto'})
+            res.status(500).send('Error obteniendo el producto')
         }
     }
 };

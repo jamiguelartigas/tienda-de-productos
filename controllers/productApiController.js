@@ -25,18 +25,13 @@ const ProductApiController = {
     },
     createProduct : async (req, res) => {
             try {
-                const newProduct = new Product({
-                ...req.body,
-                });
-                await newProduct.save();
-        
-                res.status(201).json({ mensaje : 'Producto creado con éxito!' })
+                const newProduct = await Product.create(req.body);
+                res.status(201).json(newProduct)
                 
             } catch (error) {
                 console.error(error)
                 res.status(500).json({ mensaje : 'Error creando el producto nuevo.'})
             }
-        
     },
     updateProduct: async (req, res) => {
             try {
@@ -54,7 +49,7 @@ const ProductApiController = {
                 
                 await product.save()
         
-                res.json({ mensaje : 'Producto actualizado con éxito!'})
+                res.status(200).json(product)
                 
             } catch (error) {
                 console.error(error)
@@ -64,11 +59,12 @@ const ProductApiController = {
     deleteProduct : async (req,res) => {
     try {
         const productId = req.params.productId;
-        if (!productId) {
+        const deletedProduct = await Product.findByIdAndDelete(productId);
+
+        if (!deletedProduct) {
             return res.status(404).json({ mensaje : 'Producto no encontrado'})
         }
-
-        await Product.findByIdAndDelete(productId)
+               
         res.status(200).json({ mensaje: 'Producto eliminado con éxito!'})
         
         } catch (error) {
