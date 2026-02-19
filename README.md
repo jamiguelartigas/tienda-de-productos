@@ -66,12 +66,12 @@ project
 │ ├── getNavBar.js
 │ ├── getProductCard.js
 │ ├── getProductCards.js
-│ ├── loginHtml.js
-│ └── uploadToCloudinary.js
+│ └── loginHtml.js
 │
 ├── middlewares/ # Middlewares personalizados
 │ ├── authMiddleware.js
-│ └── upload.js
+│ |── upload.js
+│ └── uploadToCloudinary.js
 │
 ├── models/ # Modelo Mongoose
 │ └── Product.js
