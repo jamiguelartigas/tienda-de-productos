@@ -39,6 +39,7 @@ npm start
 
 ## 📁 Estructura del proyecto
 
+```
 project
 │
 ├── config/ # Configuración externa
@@ -91,6 +92,7 @@ project
 ├── package.json
 ├── package-lock.json
 └── README.md
+```
 
 ## Funcionalidades
 
