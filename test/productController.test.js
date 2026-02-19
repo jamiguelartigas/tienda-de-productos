@@ -9,7 +9,7 @@ afterEach(() => jest.clearAllMocks());
 describe('Testing API POST / create product', () => {
     const app = express();
     app.use(express.json());
-    app.post('/api/products/create', ProductApiController.createProduct);
+    app.post('/api/products', ProductApiController.createProduct);
 
     it('Responde 201 con el producto creado', async () => {
         const body = {
@@ -27,7 +27,7 @@ describe('Testing API POST / create product', () => {
 
         Product.create.mockResolvedValue(fakeDoc);
 
-        const res = await request(app).post('/api/products/create').send(body);
+        const res = await request(app).post('/api/products').send(body);
 
         expect(res.status).toBe(201);
         expect(res.body).toEqual({

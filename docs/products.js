@@ -1,20 +1,44 @@
 module.exports = {
   paths: {
     "/api/products": {
-      get: {
-        tags: ["Products"],
-        description: "Get all products",
-        operationId: "getProducts",
-        parameters: [],
-        responses: {
-          200: {
-            description: "Products obtained successfully",
-          },
-          500: {
-            description: "Server error",
-          },
+        get: {
+            tags: ["Products"],
+            description: "Get all products",
+            operationId: "getProducts",
+            parameters: [],
+            responses: {
+            200: {
+                description: "Products obtained successfully",
+            },
+            500: {
+                description: "Server error",
+            },
+            },
         },
-      }
+        post: {
+            tags: ["Products"],
+            description: "Create Product",
+            operationId: "createProduct",
+            parameters: [],
+            requestBody: {
+                required: true,
+                content: {
+                    "application/json": {
+                    schema: {
+                    $ref: "#/components/schemas/Product",
+                        },
+                    },
+                },
+            },
+            responses: {
+              201: {
+                description: "Product created successfully",
+              },
+              500: {
+                description: "Server error",
+              },
+            },
+        }
     }, 
     "/api/products/{productId}": {
         get: {
@@ -89,33 +113,7 @@ module.exports = {
             500: { description: "Server error" },
             },
         }
-    },   
-    "/api/products/create": {
-        post: {
-            tags: ["Products"],
-            description: "Create Product",
-            operationId: "createProduct",
-            parameters: [],
-            requestBody: {
-                required: true,
-                content: {
-                    "application/json": {
-                    schema: {
-                    $ref: "#/components/schemas/Product",
-                        },
-                    },
-                },
-            },
-            responses: {
-              201: {
-                description: "Product created successfully",
-              },
-              500: {
-                description: "Server error",
-              },
-            },
-        }
-    },
-  },
+    }           
+  }
 }
 

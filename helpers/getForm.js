@@ -23,7 +23,7 @@ function getForm() {
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>
                 <label for="descripcion">Descripción:</label>
-                <textarea name="description" id="description" rows="2" cols="25" required></textarea>
+                <textarea name="descripcion" id="descripcion" rows="2" cols="25" required></textarea>
                 <label for="precio">Precio (€):</label>
                 <input type="number" id="precio" name="precio" min="0" step="0.01" required>
                 <label for="imagen">Imagen:</label>

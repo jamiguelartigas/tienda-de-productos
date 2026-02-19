@@ -4,18 +4,18 @@ const getProductCard = require('../helpers/getProductCard');
 const { getForm } = require('../helpers/getForm');
 const getFormEdit = require('../helpers/getFormEdit');
 const getNavBar = require('../helpers/getNavBar');
-const baseHtml = require('../helpers/baseHtml');
+const { baseHtml } = require('../helpers/baseHtml');
 const uploadToCloudinary = require("../helpers/uploadToCloudinary");
 
 
 const ProductController = {
     showProducts : async (req,res) => {
         try {
-            const isDashboard = req.originalUrl.startsWith("/dashboard");
+            const isDashboard = req.path.startsWith("/dashboard");
             const products = await Product.find();
             const productCards = getProductCards(products, { isDashboard });
             const content = getNavBar({ isDashboard }) + productCards;
-            const html =  baseHtml(content);
+            const html =  baseHtml(content, req);
             res.status(200).send(html)
         } catch (error) {
             console.error(error)
@@ -24,11 +24,11 @@ const ProductController = {
     },
     showProductById : async(req, res) => {
         try {
-            const isDashboard = req.originalUrl.startsWith("/dashboard");
+            const isDashboard = req.path.startsWith("/dashboard");
             const product = await Product.findById(req.params.productId);
             const productCard = getProductCard(product, { isDashboard });
             const content = getNavBar({ isDashboard }) + productCard;
-            const html = baseHtml(content);
+            const html = baseHtml(content,req);
             
             if (!product) {
                 return res.status(404).send('Producto no encontrado')
@@ -123,16 +123,16 @@ const ProductController = {
 
     showProductsByCategory : async (req, res) => {
         try {
-            const isDashboard = req.originalUrl.startsWith("/dashboard");
+            const isDashboard = req.path.startsWith("/dashboard");
             const products = await Product.find({ categoria : req.params.categoria });
 
             if (products.length === 0) {
-                const content = getNavBar({ isDashboard }) + `<h2>No hay productos en esta categoría: ${req.params.categoria} </h2>`
-                return res.status(200).send(baseHtml(content))
+                const content = getNavBar({ isDashboard }) + `<h2 class="no-productos-msg">No hay productos en esta categoría: ${req.params.categoria}</h2>`
+                return res.status(200).send(baseHtml(content, req))
             }
             const productCards = getProductCards(products, { isDashboard });
             const content = getNavBar({ isDashboard }) + productCards;
-            const html = baseHtml(content);
+            const html = baseHtml(content,req);
             
             res.status(200).send(html) 
 

@@ -9,7 +9,7 @@ router.get('/products', ProductApiController.showProducts);
 router.get('/products/:productId', ProductApiController.showProductById);
 
 // POST Crear un nuevo producto 
-router.post('/products/create', ProductApiController.createProduct);
+router.post('/products', ProductApiController.createProduct);
 
 // PUT Actualizar un producto 
 router.put('/products/:productId', ProductApiController.updateProduct);

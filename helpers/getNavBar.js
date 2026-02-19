@@ -9,7 +9,7 @@ function getNavBar(options = {}) {
                 <a href="/dashboard/category/Pantalones">Pantalones</a>
                 <a href="/dashboard/category/Zapatos">Zapatos</a>
                 <a href="/dashboard/category/Accesorios">Accesorios</a>
-                <a href="">Login</a>
+                <a href="/login">Login</a>
                 </nav>
                 
                 `
@@ -19,7 +19,7 @@ function getNavBar(options = {}) {
                     <a href="/products/category/Pantalones">Pantalones</a>
                     <a href="/products/category/Zapatos">Zapatos</a>
                     <a href="/products/category/Accesorios">Accesorios</a>
-                    <a href="">Login</a>
+                    <a href="/login">Login</a>
                 </nav>`
             }           
     `
