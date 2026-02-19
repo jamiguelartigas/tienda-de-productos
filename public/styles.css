@@ -91,10 +91,10 @@ h1, h2, p{
     padding: 10px;
     
 }
-.no-productos-msg{
+.warning-msg{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     background-color: rgb(235 216 164 / 85%);
     border: 1px solid black;
     margin: 10px;

@@ -7,7 +7,24 @@ const AuthController = {
             return res.redirect('/dashboard');
         }
 
-        return res.status(401).send('Credenciales incorrectas');
+        return res.status(401).send(`
+            <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Tienda de productos</title>
+                    <link rel="stylesheet" href="/styles.css">
+                </head>
+                <body>
+                    <div class="warning-msg">
+                    <h2>Credenciales incorrectas. </h2>
+                    <h3><a href="/">Inicio</a><br><br>
+                    <a href="/login">Login</a></h3>
+                    </div>
+                        
+                </body>
+                </html>
+            `);
     },
     logout: (req, res) => {
         req.session.destroy(() => {

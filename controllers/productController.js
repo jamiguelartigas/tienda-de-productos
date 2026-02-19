@@ -5,7 +5,7 @@ const { getForm } = require('../helpers/getForm');
 const getFormEdit = require('../helpers/getFormEdit');
 const getNavBar = require('../helpers/getNavBar');
 const { baseHtml } = require('../helpers/baseHtml');
-const uploadToCloudinary = require("../helpers/uploadToCloudinary");
+const uploadToCloudinary = require("../middlewares/uploadToCloudinary");
 
 
 const ProductController = {
@@ -47,7 +47,22 @@ const ProductController = {
         try {
             
             if (!req.file) {
-                return res.status(400).send('Tienes que seleccionar una imagen')
+                return res.status(400).send(`
+                    <!DOCTYPE html>
+                        <html lang="es">
+                        <head>
+                            <meta charset="UTF-8">
+                            <title>Tienda de productos</title>
+                            <link rel="stylesheet" href="/styles.css">
+                        </head>
+                        <body>
+                            <div class="warning-msg">
+                                <h2>Tienes que seleccionar una imagen</h2>
+                                <a href="/dashboard/new">Atrás</a>
+                            </div>
+                        </body>
+                        </html>
+                `)
             }
             const result = await uploadToCloudinary(req.file.buffer);
     
@@ -57,8 +72,20 @@ const ProductController = {
             });
     
             res.status(201).send(`
-                <h2>Producto creado con éxito</h2>
-                <a href="/dashboard">Volver al dashboard</a>
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Tienda de productos</title>
+                    <link rel="stylesheet" href="/styles.css">
+                </head>
+                <body>
+                    <div class="warning-msg">
+                        <h2>Producto creado con éxito</h2>
+                        <a href="/dashboard">Volver al dashboard</a>
+                    </div>
+                </body>
+                </html>
                 `)
             
         } catch (error) {
@@ -95,8 +122,20 @@ const ProductController = {
             await product.save()
     
             res.send(`
-                <h2>Producto actualizado con éxito</h2>
-                <a href="/dashboard">Volver al dashboard</a>
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Tienda de productos</title>
+                    <link rel="stylesheet" href="/styles.css">
+                </head>
+                <body>
+                    <div class="warning-msg">
+                        <h2>Producto actualizado con éxito</h2>
+                        <a href="/dashboard">Volver al dashboard</a>
+                    </div>
+                </body>
+                </html>
                 `)
             
         } catch (error) {
@@ -127,7 +166,7 @@ const ProductController = {
             const products = await Product.find({ categoria : req.params.categoria });
 
             if (products.length === 0) {
-                const content = getNavBar({ isDashboard }) + `<h2 class="no-productos-msg">No hay productos en esta categoría: ${req.params.categoria}</h2>`
+                const content = getNavBar({ isDashboard }) + `<h2 class="warning-msg">No hay productos en esta categoría: ${req.params.categoria}</h2>`
                 return res.status(200).send(baseHtml(content, req))
             }
             const productCards = getProductCards(products, { isDashboard });
