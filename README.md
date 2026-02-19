@@ -12,6 +12,8 @@ Aplicación web desarrollada con Node.js, Express y MongoDB que permite gestiona
 - Swagger
 - Express-session
 - Method-override
+- Jest
+- Supertest
 
 ## Instalación
 
@@ -124,14 +126,16 @@ POST /logout
 
 ## Modelo Product
 
+```
 {
-nombre: String,
-descripcion: String,
-imagen: String,
-categoria: String,
-talla: String,
-precio: Number
+ nombre: String,
+ descripcion: String,
+ imagen: String,
+ categoria: String,
+ talla: String,
+ precio: Number
 }
+```
 
 ## Tests
 
@@ -140,9 +144,9 @@ Este proyecto incluye tests automatizados para verificar el correcto funcionamie
 - Ejecutar tests
   npm test
 
-- Tecnologías usadas
-- Jest
-- Supertest
+- Tecnologías usadas:
+  · Jest
+  · Supertest
 
 - Cobertura actual
 - Creación de productos
