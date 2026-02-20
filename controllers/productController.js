@@ -142,7 +142,7 @@ const ProductController = {
 
             await product.save()
     
-            res.send(`
+            res.status(200).send(`
                 <!DOCTYPE html>
                 <html lang="es">
                 <head>

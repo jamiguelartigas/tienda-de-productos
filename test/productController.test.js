@@ -6,7 +6,7 @@ const ProductApiController = require('../controllers/productApiController');
 jest.mock('../models/Product');
 afterEach(() => jest.clearAllMocks());
 
-describe('Testing API POST / create product', () => {
+describe('Testing API POST / creating a product', () => {
     const app = express();
     app.use(express.json());
     app.post('/api/products', ProductApiController.createProduct);
@@ -49,7 +49,45 @@ describe('Testing API POST / create product', () => {
 });
 });
 
-describe('Testing DELETE product', () => {
+describe('Testing UPDATING a product', () =>{
+    const app = express();
+    app.use(express.json());
+    app.put('/api/products/:productId', ProductApiController.updateProduct);
+
+    it('Devuelve status 200 al actualizar un producto', async () => {
+        const productId = "elquesea"
+        const existingProduct = {
+            _id: productId,
+            nombre : "Dockers TEST",
+            descripcion : "Zapatos deportivos TEST",
+            imagen : "https://res.cloudinary.com/dv38gwo6l/image/upload/v1771179574/samples/ecommerce/shoes.png",
+            categoria : "Zapatos",
+            talla : "L",
+            precio : 36,
+            save: jest.fn()
+        }
+        const updateProduct = {
+            nombre : "Dockers TEST UPDATE",
+            descripcion : "Zapatos deportivos TEST UPDATE",
+            imagen : "https://res.cloudinary.com/dv38gwo6l/image/upload/v1771179574/samples/ecommerce/shoes.png",
+            categoria : "Zapatos",
+            talla : "L",
+            precio : 45
+        }
+
+        Product.findById.mockResolvedValue(existingProduct);
+        
+        existingProduct.save.mockResolvedValue(existingProduct);
+
+        const res = await request(app)
+            .put(`/api/products/${productId}`)
+            .send(updateProduct);
+        expect(res.status).toBe(200);
+        expect(res.body).toMatchObject(updateProduct);
+    });
+});
+
+describe('Testing DELETING a product', () => {
     const app = express();
     app.use(express.json());
     app.delete('/api/products/:productId', ProductApiController.deleteProduct);
