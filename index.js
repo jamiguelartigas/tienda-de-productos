@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+const dbConnection = require('./config/db');
 const routes = require('./routes/productRoutes');
 const ApiRoutes = require('./routes/productApiRoutes');
 const AuthRoutes = require('./routes/authRoutes');
-const dbConnection = require('./config/db');
 const methodOverride = require('method-override');
 const swaggerUI = require('swagger-ui-express');
 const docs = require('./docs/index')

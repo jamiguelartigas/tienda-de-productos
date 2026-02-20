@@ -25,6 +25,11 @@ const ProductApiController = {
     },
     createProduct : async (req, res) => {
             try {
+                const { nombre, descripcion, imagen, categoria, talla, precio } = req.body;
+
+                if ([nombre, descripcion, imagen, categoria, talla, precio].some(value => !value)) {
+                return res.status(400).json({ error: "Faltan campos obligatorios" });
+                }
                 const newProduct = await Product.create(req.body);
                 res.status(201).json(newProduct)
                 

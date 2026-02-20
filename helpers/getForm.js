@@ -14,6 +14,7 @@ function getForm() {
             <meta charset="UTF-8">
             <title>Nuevo producto</title>
             <link rel="stylesheet" href="/styles.css">
+            <link rel="icon" type="image/png" href="/images/favicon.ico">
         </head>
         <body>
             <div class="form-container">

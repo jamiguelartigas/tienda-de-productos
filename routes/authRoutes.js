@@ -13,9 +13,10 @@ router.get('/login', (req, res) => {
                     <meta charset="UTF-8">
                     <title>Tienda de productos</title>
                     <link rel="stylesheet" href="/styles.css">
+                    <link rel="icon" type="image/png" href="/images/favicon.ico">
                 </head>
                 <body>
-                    <h2 class="warning-msg">Ya estás logado.<br> <a href="/dashboard">Atrás</a></h2>
+                    <h2 class="warning-msg">Ya estás logad@<br> <a href="/dashboard">Atrás</a></h2>
                         
                 </body>
                 </html>

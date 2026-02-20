@@ -39,6 +39,26 @@ const ProductController = {
             res.status(500).send('Error obteniendo el producto')
         }
     },
+    showProductsByCategory : async (req, res) => {
+        try {
+            const isDashboard = req.path.startsWith("/dashboard");
+            const products = await Product.find({ categoria : req.params.categoria });
+
+            if (products.length === 0) {
+                const content = getNavBar({ isDashboard }) + `<h2 class="warning-msg">No hay productos en esta categoría: ${req.params.categoria}</h2>`
+                return res.status(200).send(baseHtml(content, req))
+            }
+            const productCards = getProductCards(products, { isDashboard });
+            const content = getNavBar({ isDashboard }) + productCards;
+            const html = baseHtml(content,req);
+            
+            res.status(200).send(html) 
+
+        } catch (error) {
+            console.error(error)
+            res.status(500).send('Error obteniendo el producto')
+        }
+    },
     showNewProduct : (req, res) => {
         const html = getForm();
         res.send(html)
@@ -54,11 +74,12 @@ const ProductController = {
                             <meta charset="UTF-8">
                             <title>Tienda de productos</title>
                             <link rel="stylesheet" href="/styles.css">
+                            <link rel="icon" type="image/png" href="/images/favicon.ico">
                         </head>
                         <body>
                             <div class="warning-msg">
                                 <h2>Tienes que seleccionar una imagen</h2>
-                                <a href="/dashboard/new">Atrás</a>
+                                <button type="button" onclick="history.back()">Atrás</button>
                             </div>
                         </body>
                         </html>
@@ -78,6 +99,7 @@ const ProductController = {
                     <meta charset="UTF-8">
                     <title>Tienda de productos</title>
                     <link rel="stylesheet" href="/styles.css">
+                    <link rel="icon" type="image/png" href="/images/favicon.ico">
                 </head>
                 <body>
                     <div class="warning-msg">
@@ -100,7 +122,6 @@ const ProductController = {
 
         res.send(html)
     },
-
     updateProduct: async (req, res) => {
         try {
             const product = await Product.findById(req.params.productId)
@@ -128,6 +149,7 @@ const ProductController = {
                     <meta charset="UTF-8">
                     <title>Tienda de productos</title>
                     <link rel="stylesheet" href="/styles.css">
+                    <link rel="icon" type="image/png" href="/images/favicon.ico">
                 </head>
                 <body>
                     <div class="warning-msg">
@@ -143,7 +165,6 @@ const ProductController = {
             res.status(500).send('Error actualizando el producto nuevo.')
         }
     },
-
     deleteProduct : async (req,res) => {
     try {
         const productId = req.params.productId;
@@ -158,30 +179,7 @@ const ProductController = {
             console.error(error)
             res.status(500).send('Error borrando el producto.')
         }
-    },
-
-    showProductsByCategory : async (req, res) => {
-        try {
-            const isDashboard = req.path.startsWith("/dashboard");
-            const products = await Product.find({ categoria : req.params.categoria });
-
-            if (products.length === 0) {
-                const content = getNavBar({ isDashboard }) + `<h2 class="warning-msg">No hay productos en esta categoría: ${req.params.categoria}</h2>`
-                return res.status(200).send(baseHtml(content, req))
-            }
-            const productCards = getProductCards(products, { isDashboard });
-            const content = getNavBar({ isDashboard }) + productCards;
-            const html = baseHtml(content,req);
-            
-            res.status(200).send(html) 
-
-        } catch (error) {
-            console.error(error)
-            res.status(500).send('Error obteniendo el producto')
-        }
     }
 };
-
-
 
 module.exports = { ProductController };

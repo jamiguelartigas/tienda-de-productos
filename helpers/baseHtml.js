@@ -6,6 +6,7 @@ function baseHtml (content, req) {
         <meta charset="UTF-8">
         <title>Tienda de productos</title>
         <link rel="stylesheet" href="/styles.css">
+        <link rel="icon" type="image/png" href="/images/favicon.ico">
       </head>
       <body>
         ${content}
@@ -34,6 +35,7 @@ function indexHtml() {
         <meta charset="UTF-8">
         <title>Nuevo producto</title>
         <link rel="stylesheet" href="/styles.css">
+        <link rel="icon" type="image/png" href="/images/favicon.ico">
       </head>
       <body>
         <div class="index-html">

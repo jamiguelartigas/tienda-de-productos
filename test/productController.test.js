@@ -40,7 +40,13 @@ describe('Testing API POST / create product', () => {
             precio : 36
             
         })
-    })
+    });
+    it('devuelve 400 si falta algún campo', async () => {
+        await request(app)
+        .post('/api/products')
+        .send({ nombre: 'Camiseta', precio: 9.99 })
+        .expect(400);
+});
 });
 
 describe('Testing DELETE product', () => {
