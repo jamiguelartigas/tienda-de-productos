@@ -6,11 +6,11 @@ Aplicación web desarrollada con Node.js, Express y MongoDB que permite gestiona
 
 https://tienda-de-productos-projectbreak2-s15-16.onrender.com
 
+⚠️ El servidor puede tardar unos segundos en arrancar si está en reposo.
+
 ## Documentación API
 
 https://tienda-de-productos-projectbreak2-s15-16.onrender.com/api-docs
-
-⚠️ El servidor puede tardar unos segundos en arrancar si está en reposo.
 
 ## Tecnologías usadas:
 
