@@ -2,6 +2,16 @@
 
 Aplicación web desarrollada con Node.js, Express y MongoDB que permite gestionar productos mediante panel administrador y API REST.
 
+## Demo online
+
+https://tienda-de-productos-projectbreak2-s15-16.onrender.com
+
+## Documentación API
+
+https://tienda-de-productos-projectbreak2-s15-16.onrender.com/api-docs
+
+⚠️ El servidor puede tardar unos segundos en arrancar si está en reposo.
+
 ## Tecnologías usadas:
 
 - Node.js

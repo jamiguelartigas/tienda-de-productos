@@ -24,6 +24,7 @@
   "homepage": "https://github.com/tmiguel78/ProjectBreak2_S15_16#readme",
   "dependencies": {
     "cloudinary": "^2.9.0",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "method-override": "^3.0.0",
