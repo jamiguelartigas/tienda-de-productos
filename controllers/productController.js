@@ -15,7 +15,7 @@ const ProductController = {
             const products = await Product.find();
             const productCards = getProductCards(products, { isDashboard });
             const content = getNavBar({ isDashboard }) + productCards;
-            const html =  baseHtml(content, req);
+            const html =  baseHtml(content);
             res.status(200).send(html)
         } catch (error) {
             console.error(error)
@@ -28,7 +28,7 @@ const ProductController = {
             const product = await Product.findById(req.params.productId);
             const productCard = getProductCard(product, { isDashboard });
             const content = getNavBar({ isDashboard }) + productCard;
-            const html = baseHtml(content,req);
+            const html = baseHtml(content);
             
             if (!product) {
                 return res.status(404).send('Producto no encontrado')
@@ -46,11 +46,11 @@ const ProductController = {
 
             if (products.length === 0) {
                 const content = getNavBar({ isDashboard }) + `<h2 class="warning-msg">No hay productos en esta categoría: ${req.params.categoria}</h2>`
-                return res.status(200).send(baseHtml(content, req))
+                return res.status(200).send(baseHtml(content))
             }
             const productCards = getProductCards(products, { isDashboard });
             const content = getNavBar({ isDashboard }) + productCards;
-            const html = baseHtml(content,req);
+            const html = baseHtml(content);
             
             res.status(200).send(html) 
 

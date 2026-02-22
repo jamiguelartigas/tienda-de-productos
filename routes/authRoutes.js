@@ -17,7 +17,6 @@ router.get('/login', (req, res) => {
                 </head>
                 <body>
                     <h2 class="warning-msg">Ya estás logad@<br> <a href="/dashboard">Atrás</a></h2>
-                        
                 </body>
                 </html>
         `);

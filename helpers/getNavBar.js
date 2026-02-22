@@ -1,19 +1,24 @@
 function getNavBar(options = {}) {
-    const { isDashboard = false } = options;
+    const { isDashboard } = options;
     const html = `
             ${
                 isDashboard 
-                ? `<nav>
-                <a href="/dashboard">Productos</a>
-                <a href="/dashboard/category/Camisetas">Camisetas</a>
-                <a href="/dashboard/category/Pantalones">Pantalones</a>
-                <a href="/dashboard/category/Zapatos">Zapatos</a>
-                <a href="/dashboard/category/Accesorios">Accesorios</a>
-                <a href="/login">Login</a>
+                ? `
+                <nav>
+                    <a href="/dashboard">Productos</a>
+                    <a href="/dashboard/category/Camisetas">Camisetas</a>
+                    <a href="/dashboard/category/Pantalones">Pantalones</a>
+                    <a href="/dashboard/category/Zapatos">Zapatos</a>
+                    <a href="/dashboard/category/Accesorios">Accesorios</a>
+                    <a href="/dashboard/new" style="font-style:italic">+ Producto</a>
+                    <form action="/logout" method="POST">
+                    <button type="submit" style="font-style:italic">Logout</button>
+                    </form>
                 </nav>
                 
                 `
-                : `<nav>
+                : `
+                <nav>
                     <a href="/products">Productos</a>
                     <a href="/products/category/Camisetas">Camisetas</a>
                     <a href="/products/category/Pantalones">Pantalones</a>

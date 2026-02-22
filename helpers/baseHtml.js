@@ -9,19 +9,7 @@ function baseHtml (content, req) {
         <link rel="icon" type="image/png" href="/images/favicon.ico">
       </head>
       <body>
-        ${content}
-        ${req.session?.userId ? `
-          <div class="crear-producto">
-          <form action="/dashboard/new">
-          <button type="submit">Nuevo producto</button>
-          </form>
-          <form class="logout-button" action="/logout" method="POST">
-          <button>Logout</button>
-          </form>
-          </div>
-          `
-          : ""
-        }        
+        ${content}        
       </body>
     </html>
     `
@@ -42,7 +30,7 @@ function indexHtml() {
           <div class="titulos-index">
             <h1>Tienda de productos</h1><br>
             <h2>Haz <a href="/products">click</a> para entrar a la página</h2>
-            <h4><a href="/login">Login</a> como administrador</h4>
+            <h4><a href="/login">Login</a> como administrador/a</h4>
           </div>
         </div>
      </body>

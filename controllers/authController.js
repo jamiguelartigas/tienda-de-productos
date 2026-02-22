@@ -1,7 +1,7 @@
 const AuthController = {
     login: (req, res) => {
         const { user, password } = req.body;
-
+        
         if (user === process.env.ADMIN_USER && password === process.env.ADMIN_PASS) {
             req.session.userId = user;
             return res.redirect('/dashboard');

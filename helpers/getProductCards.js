@@ -1,5 +1,5 @@
 function getProductCards(products, options = {}) {
-    const { isDashboard = false } = options;
+    const { isDashboard } = options;
     let html = '';
     for (let product of products) {
         html += `
