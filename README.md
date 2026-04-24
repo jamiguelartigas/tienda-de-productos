@@ -28,7 +28,7 @@ https://tienda-de-productos-projectbreak2-s15-16.onrender.com/api-docs
 ## Instalación
 
 1. Clonar repositorio
-   git clone https://github.com/tmiguel78/ProjectBreak2_S15_16
+   git clone https://github.com/jamiguelartigas/tienda-de-productos
 
 2. Instalar dependencias
    npm install
@@ -171,4 +171,4 @@ http://localhost:3000/api-docs
 
 ## Autor
 
-José Antonio Miguel
+José Antonio Miguel Artigas
